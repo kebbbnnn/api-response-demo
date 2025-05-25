@@ -20,7 +20,7 @@ jobs:
         echo "  \"received\": \"${{ github.event.inputs.payload }}\""
         echo '}' > result.json
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: api-response
         path: result.json
