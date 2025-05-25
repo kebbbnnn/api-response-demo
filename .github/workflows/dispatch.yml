@@ -15,10 +15,12 @@ jobs:
 
     - name: Generate JSON output
       run: |
-        echo '{'
-        echo '  "status": "ok",'
-        echo "  \"received\": \"${{ github.event.inputs.payload }}\""
-        echo '}' > result.json
+        cat <<EOF > result.json
+        {
+          "status": "ok",
+          "received": "${{ github.event.inputs.payload }}"
+        }
+        EOF
 
     - uses: actions/upload-artifact@v4
       with:
