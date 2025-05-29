@@ -2,6 +2,10 @@ name: Run LLaMA 3.2 1B
 
 on:
   workflow_dispatch:
+    inputs:
+      payload:
+        description: 'Arbitrary data passed in'
+        required: false
 
 jobs:
   llama-test:
