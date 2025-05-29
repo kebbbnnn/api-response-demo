@@ -1,0 +1,33 @@
+name: Run LLaMA 3.2 1B
+
+on:
+  workflow_dispatch:
+
+jobs:
+  llama-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake
+
+    - name: Clone llama.cpp
+      run: |
+        git clone https://github.com/ggerganov/llama.cpp.git
+        cd llama.cpp
+        make
+
+    - name: Download LLaMA 3.2 1B model
+      run: |
+        mkdir -p models
+        wget -O models/Llama-3.2-1B-Instruct-Q4_K_M.gguf https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf
+
+    - name: Run LLaMA test prompt
+      run: |
+        cd llama.cpp
+        ./main -m ../models/Llama-3.2-1B-Instruct-Q4_K_M.gguf -p "Hello, how are you?" -n 32
